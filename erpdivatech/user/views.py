@@ -20,7 +20,7 @@ class CustomUserViewset(viewsets.ModelViewSet):
     queryset=CustomUser.objects.all()
     serializer_class=CustomUserSerializer
     authentication_classes=[JWTAuthentication] 
-    permission_classes=[IsAuthenticated]
+    permission_classes=[AllowAny]
     
 
 class EquipeViewset(viewsets.ModelViewSet):

@@ -4,6 +4,7 @@ from user.models import CustomUser
 from django.contrib.auth.models import Permission
 from datetime import datetime, timedelta
 from inventory.models import ProduitsEnBonEntry, ProduitsEnBonRetour
+from produits.models import *
 # from ventes.models import ProduitsEnBonSortie
 # from comptoire.models import ProduitsEnBonComptoir
 # class ProduitsCustomPermission(Permission):
@@ -24,8 +25,6 @@ class Category(models.Model):
      def __str__(self) :
          return f'{self.Libellé}'
          
-
-               
 class Product(models.Model):
     reference = models.CharField( ("Référence du produit"), help_text=("Référence interne pour ce produit"),
           max_length=120,
@@ -54,10 +53,10 @@ class Product(models.Model):
     reforme = models.BooleanField(default=False)
     fournisseur = models.CharField(max_length=100, default='', blank=True)
     store = models.ForeignKey(store, on_delete=models.CASCADE, default=None, null=True, blank=True)
-    
-  
     def __str__(self):
 	    return f"Name: {self.name}, ID: {self.id}"
+               
+
 
 class HistoriqueAchatProduit(models.Model):
     produit =  models.ForeignKey(Product, on_delete=models.CASCADE, related_name='monHIstoriqueAchat',  default=None, null=True, blank=True) 
@@ -80,7 +79,7 @@ class NumSeries(models.Model):
   
    
 class variantsPrixClient(models.Model):
-     type_client = models.ForeignKey('clientinfo.typeClient', on_delete=models.CASCADE, related_name="prix_var",default='', blank=True)
+     type_client = models.ForeignKey(typeClient, on_delete=models.CASCADE, related_name="prix_var",default='', blank=True)
      produit =  models.ForeignKey(Product, on_delete=models.CASCADE, related_name="produit_var",default='', blank=True)
      prix_vente = models.DecimalField(max_digits=15, decimal_places=2, default=0)
      prix_vente_pc = models.DecimalField(max_digits=15, decimal_places=2, default=0)
